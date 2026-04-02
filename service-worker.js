@@ -1,6 +1,6 @@
 self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open("juangutie.github.io_v1").then((cache) =>
+        caches.open("juangutie.github.io_v7").then((cache) =>
             cache.addAll([
                 "/",
                 "/favicon.ico",
@@ -8,6 +8,20 @@ self.addEventListener("install", (event) => {
             ])
         )
     );
+});
+
+self.addEventListener("activate", (event) => {
+    event.waitUntil(
+        caches.keys().then((keys) => 
+            Promise.all(
+                keys.filter((key) =>
+                    key.startsWith("juangutie.github.io") && !key.endsWith("v7")
+                ).map((key) =>
+                    caches.delete(key)
+                )
+            )
+        )
+    )
 });
 
 self.addEventListener("fetch", (event) => {
