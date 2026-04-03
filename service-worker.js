@@ -29,7 +29,12 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
     event.respondWith(
         caches.match(event.request).then((response) =>
-            response ?? fetch(event.request)
+            response ?? fetch(event.request).catch((error) => 
+                new Response(error, {
+                    status: 408,
+                    headers: {"Content-Type": "text/plain"}
+                })
+            )
         )
     );
 });
