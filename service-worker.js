@@ -1,26 +1,28 @@
+const REPOSITORY = "juangutie.github.io";
+const CACHE_VERSION = "v2"
+const URLS = [
+    "/",
+    "/favicon.ico",
+    "/index.html",
+];
+
 self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open("juangutie.github.io_v7").then((cache) =>
-            cache.addAll([
-                "/",
-                "/favicon.ico",
-                "/index.html",
-            ])
+        caches.open(`${REPOSITORY}_${CACHE_VERSION}`).then((cache) =>
+            cache.addAll(URLS)
         )
     );
 });
 
 self.addEventListener("activate", (event) => {
     event.waitUntil(
-        caches.keys().then((keys) => 
-            Promise.all(
-                keys.filter((key) =>
-                    key.startsWith("juangutie.github.io") && !key.endsWith("v7")
-                ).map((key) =>
-                    caches.delete(key)
-                )
-            )
-        )
+        caches.keys().then((keys) => Promise.all(
+            keys.filter((key) =>
+                key.startsWith(REPOSITORY) && !key.endsWith(CACHE_VERSION)
+            ).map((key) =>
+                caches.delete(key)
+            )  
+        ))
     )
 });
 
