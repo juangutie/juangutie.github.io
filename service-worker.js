@@ -1,5 +1,5 @@
 const REPOSITORY = "juangutie.github.io";
-const VERSION = "v6";
+const VERSION = "v7";
 const URLS = [
     "/",
     "/favicon.ico",
