@@ -1,5 +1,5 @@
 const REPOSITORY = "juangutie.github.io";
-const VERSION = "v10";
+const VERSION = "v11";
 const URLS = [
     "/",
     "/favicon.ico",
@@ -43,7 +43,7 @@ self.addEventListener("fetch", (event) => {
         }
 
         // Case 2: return from network and add to static cache
-        const shouldBeInStaticCache = URLS.includes(event.request);
+        const shouldBeInStaticCache = URLS.some(({url}) => url === event.request.url);
 
         if (shouldBeInStaticCache) {
             const updatedRequest = new Request(event.request, {cache: "no-cache"});
